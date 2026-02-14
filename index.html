@@ -2,61 +2,76 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Be My Valentine ❤️</title>
+<title>My Valentine 💖</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: 'Comic Sans MS', cursive;
-    text-align: center;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin:0;
+    font-family:'Comic Sans MS',cursive;
+    text-align:center;
+    background: linear-gradient(135deg,#ff4d6d,#ff758f,#ff8fab,#ffc2d1);
+    overflow:hidden;
+}
+
+/* Flower overlay */
+body::before {
+    content:"🌹 🌸 🌺 🌹 🌸 🌺 🌹 🌸 🌺 🌹 🌸 🌺";
+    position:absolute;
+    font-size:40px;
+    opacity:0.15;
+    width:100%;
+    height:100%;
+    line-height:60px;
+    pointer-events:none;
 }
 
 .container {
-    background: rgba(255,255,255,0.85);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-h1 {
-    color: #ff4d6d;
-    font-size: 2.5em;
+    background: rgba(255,255,255,0.92);
+    padding:40px;
+    border-radius:20px;
+    margin-top:5vh;
+    display:inline-block;
+    max-width:420px;
 }
 
 button {
-    padding: 15px 30px;
-    margin: 10px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    padding:12px 25px;
+    margin:10px;
+    border-radius:12px;
+    border:none;
+    cursor:pointer;
 }
 
-#yesBtn {
-    background-color: #ff4d6d;
-    color: white;
-}
-
-#noBtn {
-    background-color: #888;
-    color: white;
-}
-
-#photoSection {
-    display: none;
-    margin-top: 20px;
-}
+#yesBtn { background:#ff4d6d; color:white; }
+#noBtn { background:#777; color:white; }
 
 img {
-    max-width: 300px;
-    border-radius: 15px;
-    margin-top: 15px;
+    max-width:250px;
+    border-radius:15px;
+}
+
+/* Slideshow */
+#slideshow {
+    width:250px;
+    height:250px;
+    margin:auto;
+}
+
+/* Confetti */
+.confetti {
+    position:absolute;
+    font-size:20px;
+    animation:fall 3s linear infinite;
+}
+
+@keyframes fall {
+    from { transform: translateY(-10vh); }
+    to { transform: translateY(100vh); }
+}
+
+#lyrics {
+    color:#ff4d6d;
+    margin-top:10px;
 }
 </style>
 </head>
@@ -64,34 +79,98 @@ img {
 <body>
 
 <div class="container">
-    <h1>Will you be my Valentine? 💕</h1>
 
-    <button id="yesBtn">YES 💖</button>
-    <button id="noBtn">NO 😢</button>
+<h1>Will you be my Valentine, Nawroj? 💖</h1>
 
-    <div id="photoSection">
-        <h2>Yayyy ❤️ I love you!!!</h2>
-        <!-- PUT YOUR PHOTO FILE NAME BELOW -->
-        <img src="us.jpg" alt="Our Photo">
-    </div>
+<button id="yesBtn">YES 💘</button>
+<button id="noBtn">NO 😢</button>
+
+<div id="photoSection" style="display:none">
+
+<h2>AWW, I love you so much ❤️</h2>
+
+<div id="slideshow">
+<img id="slideImg" src="us1.jpg">
 </div>
 
+<div id="loveQuestion">
+<h2>How much do you love me? 😌</h2>
+
+<button onclick="answer('noless')">no less 🫠</button>
+<button onclick="answer('more')">more 💗</button>
+<button onclick="answer('infinite')">more infinite ♾️</button>
+<button onclick="answer('extreme')">extreme infinite 💋💋</button>
+
+</div>
+
+<div id="lyrics"></div>
+
+</div>
+
+<audio id="music" src="love.mp3"></audio>
+
 <script>
-let yesBtn = document.getElementById("yesBtn");
-let noBtn = document.getElementById("noBtn");
-let photoSection = document.getElementById("photoSection");
+let yesBtn=document.getElementById("yesBtn");
+let noBtn=document.getElementById("noBtn");
+let photoSection=document.getElementById("photoSection");
+let music=document.getElementById("music");
 
-let yesSize = 18;
+let size=16;
 
-noBtn.addEventListener("click", function() {
-    yesSize += 8;
-    yesBtn.style.fontSize = yesSize + "px";
-    yesBtn.style.padding = (yesSize/2) + "px " + yesSize + "px";
-});
+noBtn.onclick=function(){
+    size+=6;
+    yesBtn.style.fontSize=size+"px";
+};
 
-yesBtn.addEventListener("click", function() {
-    photoSection.style.display = "block";
-});
+yesBtn.onclick=function(){
+    photoSection.style.display="block";
+    music.play();
+    startConfetti();
+    startLyrics();
+    startSlideshow();
+};
+
+function answer(type){
+    if(type==="noless") alert("Fuck u 😞");
+    if(type==="more") alert("Waaaw dont love me enough, huh ☹️?");
+    if(type==="infinite") alert("Theres even further options to show ur love 🥹");
+    if(type==="extreme") alert("AWWWWWWWWW... I knew it 😻");
+}
+
+function startConfetti(){
+    for(let i=0;i<40;i++){
+        let c=document.createElement("div");
+        c.innerHTML="🎉";
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.animationDuration=(Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+    }
+}
+
+/* Lyrics typing */
+let text="You are my favorite place, my safe space, my forever ❤️";
+let i=0;
+
+function startLyrics(){
+    let l=document.getElementById("lyrics");
+    let interval=setInterval(()=>{
+        l.innerHTML+=text.charAt(i);
+        i++;
+        if(i>=text.length) clearInterval(interval);
+    },50);
+}
+
+/* Slideshow */
+let images=["us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"];
+let index=0;
+
+function startSlideshow(){
+    setInterval(()=>{
+        index=(index+1)%images.length;
+        document.getElementById("slideImg").src=images[index];
+    },5000);
+}
 </script>
 
 </body>

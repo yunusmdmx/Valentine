@@ -124,7 +124,10 @@ img {
 <button onclick="secretYes()" style="padding:15px 30px; font-size:20px;">YES 😌</button>
 </div>
 
-<audio id="music" src="love.mp3" loop></audio>
+<audio id="music" preload="auto" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
 <audio id="secretMusic" src="careless.mp3"></audio>
 
 
@@ -143,11 +146,23 @@ noBtn.onclick=function(){
 };
 
 yesBtn.onclick=function(){
+
     photoSection.style.display="block";
 
-    let musicPlayer = document.getElementById("music");
+    const musicPlayer = document.getElementById("music");
+
+    musicPlayer.pause();
     musicPlayer.currentTime = 0;
-    musicPlayer.play().catch(()=>{});
+
+    const playPromise = musicPlayer.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            document.body.addEventListener("click", () => {
+                musicPlayer.play();
+            }, { once: true });
+        });
+    }
 
     document.getElementById("secretBtn").style.display="block";
 
@@ -155,6 +170,7 @@ yesBtn.onclick=function(){
     startLyrics();
     startSlideshow();
 };
+
 
 
 function answer(type){
@@ -204,15 +220,18 @@ let secretBtn=document.getElementById("secretBtn");
 let secretSection=document.getElementById("secretSection");
 
 secretBtn.onclick=function(){
+
     secretSection.style.display="block";
 
-    let mainMusic = document.getElementById("music");
+    const mainMusic = document.getElementById("music");
     mainMusic.pause();
 
-    let secretMusic = document.getElementById("secretMusic");
+    const secretMusic = document.getElementById("secretMusic");
+    secretMusic.pause();
     secretMusic.currentTime = 0;
     secretMusic.play().catch(()=>{});
 }
+
 
 
 

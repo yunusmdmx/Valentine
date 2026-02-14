@@ -87,8 +87,8 @@ img {
 <body>
 
 <div class="container">
+<button id="secretBtn" style="display:none; position:absolute; top:10px; right:10px; font-size:12px;">Secret 🤫</button>
 
-<button id="secretBtn" style="position:absolute; top:10px; right:10px; font-size:12px;">Secret 🤫</button>
 
 <h1>Will you be my Valentine, Nawroj? 💖</h1>
 
@@ -124,7 +124,7 @@ img {
 <button onclick="secretYes()" style="padding:15px 30px; font-size:20px;">YES 😌</button>
 </div>
 
-<audio id="music" src="love.mp3"></audio>
+<audio id="music" src="love.mp3" loop></audio>
 <audio id="secretMusic" src="careless.mp3"></audio>
 
 
@@ -144,11 +144,18 @@ noBtn.onclick=function(){
 
 yesBtn.onclick=function(){
     photoSection.style.display="block";
-    music.play();
+
+    let musicPlayer = document.getElementById("music");
+    musicPlayer.currentTime = 0;
+    musicPlayer.play().catch(()=>{});
+
+    document.getElementById("secretBtn").style.display="block";
+
     startConfetti();
     startLyrics();
     startSlideshow();
 };
+
 
 function answer(type){
     if(type==="noless") alert("😞 Fuck u");
@@ -198,8 +205,15 @@ let secretSection=document.getElementById("secretSection");
 
 secretBtn.onclick=function(){
     secretSection.style.display="block";
-    document.getElementById("secretMusic").play();
+
+    let mainMusic = document.getElementById("music");
+    mainMusic.pause();
+
+    let secretMusic = document.getElementById("secretMusic");
+    secretMusic.currentTime = 0;
+    secretMusic.play().catch(()=>{});
 }
+
 
 
 function secretYes(){

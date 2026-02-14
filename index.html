@@ -13,7 +13,7 @@ body {
     overflow:hidden;
 }
 
-/* Flower overlay */
+/* flower overlay */
 body::before {
     content:"🌹 🌸 🌺 🌹 🌸 🌺 🌹 🌸 🌺 🌹 🌸 🌺";
     position:absolute;
@@ -21,17 +21,17 @@ body::before {
     opacity:0.15;
     width:100%;
     height:100%;
-    line-height:60px;
     pointer-events:none;
 }
 
 .container {
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.93);
     padding:40px;
     border-radius:20px;
     margin-top:5vh;
     display:inline-block;
     max-width:420px;
+    position:relative;
 }
 
 button {
@@ -50,14 +50,12 @@ img {
     border-radius:15px;
 }
 
-/* Slideshow */
-#slideshow {
-    width:250px;
-    height:250px;
-    margin:auto;
+#lyrics {
+    color:#ff4d6d;
+    margin-top:10px;
 }
 
-/* Confetti */
+/* confetti */
 .confetti {
     position:absolute;
     font-size:20px;
@@ -69,9 +67,19 @@ img {
     to { transform: translateY(100vh); }
 }
 
-#lyrics {
-    color:#ff4d6d;
-    margin-top:10px;
+/* secret screen */
+#secretSection {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg,#8b0000,#b30000,#ff1a1a);
+    color:white;
+    text-align:center;
+    padding-top:20vh;
+    z-index:999;
 }
 </style>
 </head>
@@ -80,6 +88,8 @@ img {
 
 <div class="container">
 
+<button id="secretBtn" style="position:absolute; top:10px; right:10px; font-size:12px;">Secret 🤫</button>
+
 <h1>Will you be my Valentine, Nawroj? 💖</h1>
 
 <button id="yesBtn">YES 💘</button>
@@ -87,7 +97,7 @@ img {
 
 <div id="photoSection" style="display:none">
 
-<h2>AWW, I love you so much ❤️</h2>
+<h2>I love you so much ❤️</h2>
 
 <div id="slideshow">
 <img id="slideImg" src="us1.jpg">
@@ -107,9 +117,19 @@ img {
 
 </div>
 
+</div>
+
+<div id="secretSection">
+<h1>YDo you wanna do Fucky Fucky??!!😋🫣</h1>
+<button onclick="secretYes()" style="padding:15px 30px; font-size:20px;">YES 😌</button>
+</div>
+
 <audio id="music" src="love.mp3"></audio>
+<audio id="secretMusic" src="careless.mp3"></audio>
+
 
 <script>
+
 let yesBtn=document.getElementById("yesBtn");
 let noBtn=document.getElementById("noBtn");
 let photoSection=document.getElementById("photoSection");
@@ -131,10 +151,10 @@ yesBtn.onclick=function(){
 };
 
 function answer(type){
-    if(type==="noless") alert("Fuck u 😞");
-    if(type==="more") alert("Waaaw dont love me enough, huh ☹️?");
-    if(type==="infinite") alert("Theres even further options to show ur love 🥹");
-    if(type==="extreme") alert("AWWWWWWWWW... I knew it 😻");
+    if(type==="noless") alert("😞 Fuck u");
+    if(type==="more") alert("waaaw, dont love me enough huh ☹️?");
+    if(type==="infinite") alert("theres even further options to show ur love 🥹");
+    if(type==="extreme") alert("AWWWWWWWWW… I knew it 😻");
 }
 
 function startConfetti(){
@@ -148,7 +168,7 @@ function startConfetti(){
     }
 }
 
-/* Lyrics typing */
+/* lyrics typing */
 let text="You are my favorite place, my safe space, my forever ❤️";
 let i=0;
 
@@ -161,7 +181,7 @@ function startLyrics(){
     },50);
 }
 
-/* Slideshow */
+/* slideshow */
 let images=["us1.jpg","us2.jpg","us3.jpg","us4.jpg","us5.jpg"];
 let index=0;
 
@@ -171,6 +191,21 @@ function startSlideshow(){
         document.getElementById("slideImg").src=images[index];
     },5000);
 }
+
+/* secret */
+let secretBtn=document.getElementById("secretBtn");
+let secretSection=document.getElementById("secretSection");
+
+secretBtn.onclick=function(){
+    secretSection.style.display="block";
+    document.getElementById("secretMusic").play();
+}
+
+
+function secretYes(){
+    alert("Scheme...Horny ass🤭🥴");
+}
+
 </script>
 
 </body>
